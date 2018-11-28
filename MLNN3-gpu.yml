@@ -63,6 +63,8 @@ dependencies:
   - mpmath
   - msgpack-python
   - multipledispatch
+  - mypy
+  - mypy_extensions
   - nbconvert
   - nbformat
   - nbpresent
@@ -111,6 +113,7 @@ dependencies:
   - scikit-image
   - scikit-learn
   - scipy
+  - scrapy
   - seaborn
   - setuptools
   - simplegeneric
@@ -142,6 +145,7 @@ dependencies:
   - werkzeug
   - wheel
   - widgetsnbextension
+  - wxpython
   - xlrd
   - xlsxwriter
   - xz

@@ -107,6 +107,7 @@ dependencies:
   - scikit-image
   - scikit-learn
   - scipy
+  - scrapy
   - seaborn
   - setuptools
   - simplegeneric
@@ -132,6 +133,7 @@ dependencies:
   - werkzeug
   - wheel
   - widgetsnbextension
+  - wxpython
   - xlrd
   - xlsxwriter
   - xz
