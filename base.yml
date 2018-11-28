@@ -94,8 +94,10 @@ dependencies:
   - pandoc
   - pandocfilters
   - pathlib2
+  - pefile
   - pep8
   - pep8-naming
+  - pexpect
   - pillow
   - pip
   - psutil
