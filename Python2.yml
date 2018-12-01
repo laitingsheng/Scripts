@@ -8,6 +8,7 @@ dependencies:
   - autopep8
   - babel
   - backports
+  - beautifulsoup4
   - bitarray
   - blas
   - bleach
