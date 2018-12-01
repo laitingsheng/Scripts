@@ -63,6 +63,7 @@ dependencies:
   - multipledispatch
   - mypy
   - mypy_extensions
+  - nbbrowserpdf
   - nbconvert
   - nbformat
   - nbpresent

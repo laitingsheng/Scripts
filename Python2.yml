@@ -60,6 +60,7 @@ dependencies:
   - mpmath
   - msgpack-python
   - multipledispatch
+  - nbbrowserpdf
   - nbconvert
   - nbformat
   - nbpresent
