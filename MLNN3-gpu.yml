@@ -2,6 +2,7 @@ name: MLNN3
 channels:
   - defaults
   - conda-forge
+  - pytorch
 dependencies:
   - atomicwrites
   - automat
@@ -109,6 +110,7 @@ dependencies:
   - python
   - python-dateutil
   - python-libarchive-c
+  - pytorch
   - pyyaml
   - pyzmq
   - requests
@@ -139,6 +141,7 @@ dependencies:
   - tensorflow-gpu
   - theano
   - tk
+  - torchvision
   - tqdm
   - typed-ast
   - typing
