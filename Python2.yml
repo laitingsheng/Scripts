@@ -56,7 +56,6 @@ dependencies:
   - mkl
   - mkl-service
   - mkl_fft
-  - mkl_random
   - more-itertools
   - mpmath
   - msgpack-python
