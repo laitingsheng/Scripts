@@ -122,6 +122,7 @@ dependencies:
   - snappy
   - sortedcollections
   - sortedcontainers
+  - spacy
   - sphinx
   - sphinxcontrib
   - sphinxcontrib-websupport
