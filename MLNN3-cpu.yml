@@ -146,6 +146,7 @@ dependencies:
   - webencodings
   - werkzeug
   - wheel
+  - whoosh
   - widgetsnbextension
   - wxpython
   - xlrd
