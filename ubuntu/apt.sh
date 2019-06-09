@@ -33,7 +33,7 @@ apt_install() {
     apt-get -y install < $1
 }
 
-apt_upgrade {
+apt_upgrade() {
     apt-get -y dist-upgrade
     apt-get -y upgrade
 }
