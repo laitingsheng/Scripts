@@ -10,27 +10,20 @@ INFO="${YELLOW}INFO${NC}"
 WARNING="${RED}WARNING${NC}"
 
 apt_init() {
-    if [ $# -ne 3 ]
+    if [ $# -ne 2 ]
     then
         printf "$WARNING: apt_init() takes three parameters\n"
         return -1
     fi
 
     # replace sources.list
-    cp "$1" "$1.backup"
-    sed -i "s/\/archive\.ubuntu/\/$2\.archive\.ubuntu/g;s/$(lsb_release -c | awk -F\  '{printf $2}')/$3/g" $1
+    sources=/etc/apt/sources.list
+    cp "$sources" "$sources.back"
+    sed -i "s/\/archive\.ubuntu/\/$1\.archive\.ubuntu/g;s/$(lsb_release -c | awk -F\  '{printf $2}')/$2/g" $sources
 
     apt-get update
-}
 
-apt_install() {
-    if [ $# -ne 1 ]
-    then
-        printf "$WARNING: apt_install() takes one parameter\n"
-        return -1
-    fi
-
-    apt-get -y install < $1
+    apt-get -y install < apt.list
 }
 
 apt_upgrade() {
