@@ -99,12 +99,8 @@ cp /etc/apt/sources.list /etc/apt/sources.list.backup
 install -o root -g root -m 644 sources.list /etc/apt/
 rm sources.list
 
-info_echo "Adding Miniconda repo"
-# first install the gpg key
-curl https://repo.anaconda.com/pkgs/misc/gpgkeys/anaconda.asc | gpg --dearmor > conda.gpg
-install -o root -g root -m 644 conda.gpg /etc/apt/trusted.gpg.d/
-# add the conda repo
-echo "deb [arch=amd64] https://repo.anaconda.com/pkgs/misc/debrepo/conda stable main" > /etc/apt/sources.list.d/conda.list
+info_echo "Adding Ansible PPA"
+add-apt-repository ppa:ansible/ansible
 
 info_echo "Refreshing the index and installing/upgrading packages"
 apt-get update
@@ -132,12 +128,17 @@ htop
 net-tools
 expect
 tree
-conda
+ansible
 EOL
 apt-get -y install < apt.list
 rm apt.list
 # Upgrade the rest
 apt-get -y dist-upgrade
 apt-get -y upgrade
+
+info_echo "Installing Miniconda 3"
+curl -O install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash install.sh || exit $?
+rm install.sh
 
 info_echo "Script finalised"
