@@ -34,7 +34,6 @@ then
     return 1
 fi
 
-
 if uname -a | grep -q Microsoft
 then
     # add wsl.conf to /etc to enable permission bits on NTFS for WSL
@@ -114,6 +113,8 @@ cat > apt.list <<- EOL
 gcc
 g++
 make
+wget
+curl
 libboost-dev-all
 clang
 llvm
@@ -123,6 +124,7 @@ lldb
 openjdk-8-jdk
 openjdk-11-jdk
 haskell-platform
+perl
 git
 nano
 moreutils
