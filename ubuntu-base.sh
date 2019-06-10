@@ -37,7 +37,8 @@ fi
 if uname -a | grep -q Microsoft
 then
     # add wsl.conf to /etc to enable permission bits on NTFS for WSL
-    cat > wsl.conf <<- EOL
+    info_echo "Adding wsl.conf to /etc"
+    cat > /etc/wsl.conf <<- EOL
 [automount]
 enabled = true
 root = /mnt/
@@ -52,9 +53,8 @@ generateResolvConf = true
 enabled = true
 appendWindowsPath = true
 EOL
-    info_echo "Adding wsl.conf to /etc"
-    install -o root -g root -m 644 wsl.conf /etc/
-    rm wsl.conf
+    chown root:root /etc/wsl.conf
+    chmod 644 /etc/wsl.conf
 
     # containerisation is not supported yet
     info_echo "Removing lxd from the system for WSL"
@@ -105,7 +105,7 @@ add-apt-repository ppa:ansible/ansible
 info_echo "Refreshing the index and installing/upgrading packages"
 apt-get update
 # generate the list
-cat > apt.list <<- EOL
+apt-get install <<- EOL
 gcc
 g++
 make
@@ -130,8 +130,6 @@ expect
 tree
 ansible
 EOL
-apt-get -y install < apt.list
-rm apt.list
 # Upgrade the rest
 apt-get -y dist-upgrade
 apt-get -y upgrade
