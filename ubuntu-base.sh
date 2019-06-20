@@ -65,16 +65,16 @@ print_usage() {
     echo "Usage: (sudo) $0 -m -u"
 }
 
-location=au
-distro=disco
+repo=au.archive.ubuntu.com/ubuntu
+distro=bionic
 
-while getopts ":d:l:mu" opt; do
+while getopts ":d:r:" opt; do
     case $opt in
         d )
             distro=$OPTARG
             ;;
-        l )
-            location=$OPTARG
+        r )
+            repo=$OPTARG
             ;;
         \? )
             print_usage
@@ -92,7 +92,7 @@ done
 cp /etc/apt/sources.list /etc/apt/sources.list.backup
 for pool in $distro $distro-updates $distro-backports $distro-security
 do
-    echo "deb http://$location.archive.ubuntu.com/ubuntu/" $pool main restricted universe multiverse
+    echo "deb http://$repo $pool main restricted universe multiverse"
 done > /etc/apt/sources.list
 echo "deb http://archive.canonical.com/ubuntu $distro partner" >> /etc/apt/sources.list
 
@@ -130,10 +130,5 @@ EOL
 # Upgrade the rest
 apt-get -y dist-upgrade
 apt-get -y upgrade
-
-info_echo "Installing Miniconda 3"
-curl -O install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash install.sh || exit $?
-rm install.sh
 
 info_echo "Script finalised"
