@@ -55,11 +55,11 @@ appendWindowsPath = true
 EOL
     chown root:root /etc/wsl.conf
     chmod 644 /etc/wsl.conf
-
-    # containerisation is not supported yet
-    info_echo "Removing lxd from the system for WSL"
-    apt-get -y remove lxd lxd-client
 fi
+
+
+info_echo "Removing unnecessary lxd and snap"
+apt-get -y purge lxd lxd-client snapd
 
 print_usage() {
     echo "Usage: (sudo) $0 -m -u"
@@ -89,18 +89,12 @@ while getopts ":d:l:mu" opt; do
 done
 
 # create a sources.list file
-rm sources.list
+cp /etc/apt/sources.list /etc/apt/sources.list.backup
 for pool in $distro $distro-updates $distro-backports $distro-security
 do
-    echo "deb http://$location.archive.ubuntu.com/ubuntu/" $pool main restricted universe multiverse >> sources.list
-done
-echo "deb http://archive.canonical.com/ubuntu $distro partner" >> sources.list
-cp /etc/apt/sources.list /etc/apt/sources.list.backup
-install -o root -g root -m 644 sources.list /etc/apt/
-rm sources.list
-
-info_echo "Adding Ansible PPA"
-add-apt-repository ppa:ansible/ansible
+    echo "deb http://$location.archive.ubuntu.com/ubuntu/" $pool main restricted universe multiverse
+done > /etc/apt/sources.list
+echo "deb http://archive.canonical.com/ubuntu $distro partner" >> /etc/apt/sources.list
 
 info_echo "Refreshing the index and installing/upgrading packages"
 apt-get update
@@ -113,6 +107,9 @@ wget
 curl
 libboost-dev-all
 clang
+clang-format
+clang-tidy
+clang-tools
 llvm
 valgrind
 gdb
@@ -124,11 +121,11 @@ perl
 git
 nano
 moreutils
+parallel
 htop
 net-tools
 expect
 tree
-ansible
 EOL
 # Upgrade the rest
 apt-get -y dist-upgrade
