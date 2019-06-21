@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # colours
 YELLOW='\033[1;33m'
@@ -57,16 +57,15 @@ EOL
     chmod 644 /etc/wsl.conf
 fi
 
-
 info_echo "Removing unnecessary lxd and snap"
 apt-get -y purge lxd lxd-client snapd
 
 print_usage() {
-    echo "Usage: (sudo) $0 -m -u"
+    echo "Usage: (sudo) $0 [-d distro] [-r repo]"
 }
 
-repo=au.archive.ubuntu.com/ubuntu
-distro=bionic
+repo="au.archive.ubuntu.com/ubuntu"
+distro="bionic"
 
 while getopts ":d:r:" opt; do
     case $opt in
@@ -89,7 +88,6 @@ while getopts ":d:r:" opt; do
 done
 
 # create a sources.list file
-cp /etc/apt/sources.list /etc/apt/sources.list.backup
 for pool in $distro $distro-updates $distro-backports $distro-security
 do
     echo "deb http://$repo $pool main restricted universe multiverse"
