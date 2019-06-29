@@ -3,9 +3,15 @@ ubuntu:base:
   image: ubuntu:bionic
   script:
     - bash ./ubuntu.base.sh -d bionic -l us -u $(whoami)
+  only:
+    changes:
+      - ubuntu.base.sh
 
 ubuntu:desktop:
   stage: test
   image: ubuntu:bionic
   script:
     - bash ./ubuntu.desktop.sh -d bionic -l us -u $(whoami)
+  only:
+    changes:
+      - ubuntu.desktop.sh

@@ -11,7 +11,7 @@ apt-get -y install libboost-all-dev clang clang-format clang-tidy clang-tools ll
 # official Docker repo
 info_echo "Adding Docker repo"
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-echo "deb https://download.docker.com/linux/ubuntu $distro stable" >> /etc/apt/sources.list
+echo "deb https://download.docker.com/linux/ubuntu $dist stable" >> /etc/apt/sources.list
 
 # official Ansible repo
 info_echo "Adding Ansible PPA"
