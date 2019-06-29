@@ -1,6 +1,5 @@
 ubuntu:bionic:
   image:
     name: ubuntu:bionic
-    entrypoint: ["bash", "./ubuntu-base.sh", "-d bionic -l us -u $(whoami)"]
   script:
-    - test/ubuntu/base.sh
+    - bash ./ubuntu-base.sh -d bionic -l us -u $(whoami)
