@@ -76,7 +76,6 @@ sed -i "s/%COMMAND%/deb/;s/%PREFIX%/$loc./;s/%DIST%/$dist/" /etc/apt/sources.lis
 
 # set timezone for tzdata
 ln -fs /usr/share/zoneinfo/Australia/Melbourne /etc/localtime
-dpkg-reconfigure -f noninteractive tzdata
 
 # manage packages
 info_echo "Refreshing the index and installing/upgrading packages"
