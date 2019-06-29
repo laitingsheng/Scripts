@@ -40,11 +40,6 @@ do
 				warning_echo "'$user' is an invalid user name"
 				exit 1
 			fi
-			if [ ! -d ~$user ]
-			then
-				warning_echo "'$user' does not have home directory"
-				exit 1
-			fi
 			;;
 		w )
 			win_path='true'
@@ -60,6 +55,8 @@ do
 			;;
 	esac
 done
+
+ls -alF /
 
 [ -z $user ] && warning_echo "user was not set" && exit 1
 
@@ -102,13 +99,5 @@ EOL
 # Upgrade the rest
 apt-get -y dist-upgrade
 apt-get -y upgrade
-
-# clone repo for nano syntax highlight
-info_echo "Cloning nano rc repo"
-git clone https://github.com/scopatz/nanorc.git ~$user/.nano
-chown -R $user:$user .nano
-chmod -R go-w ~$user/.nano
-ln -s ~$user/.nano/nanorc ~$user/.nanorc
-chmod $user:$user ~$user/.nanorc
 
 info_echo "Script finalised"
