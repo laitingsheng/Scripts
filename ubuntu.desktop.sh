@@ -3,7 +3,7 @@
 # exit on error & prevent unset variable
 set -eu
 
-source ubuntu-base.sh $*
+source ubuntu.base.sh $*
 
 # install extra packages
 apt-get -y install <<- EOL
