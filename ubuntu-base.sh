@@ -40,6 +40,7 @@ do
 				warning_echo "'$user' is an invalid user name"
 				exit 1
 			fi
+			echo ~$user
 			;;
 		w )
 			win_path='true'
@@ -55,8 +56,6 @@ do
 			;;
 	esac
 done
-
-ls -alF /
 
 [ -z $user ] && warning_echo "user was not set" && exit 1
 
