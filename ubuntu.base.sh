@@ -40,8 +40,6 @@ do
 				warning_echo "'$user' is an invalid user name"
 				exit 1
 			fi
-			cat /etc/passwd
-			echo ~$user
 			;;
 		w )
 			win_path='true'
@@ -77,6 +75,7 @@ sed -i "s/%COMMAND%/deb/;s/%PREFIX%/$loc./;s/%DIST%/$dist/" /etc/apt/sources.lis
 info_echo "Refreshing the index and installing/upgrading packages"
 apt-get update
 apt-get -y install <<- EOL
+bash
 gcc
 g++
 make
@@ -100,5 +99,18 @@ apt-get -y upgrade
 # Remove Ubuntu builtin container
 info_echo "Removing unnecessary lxd and snap"
 apt-get -y purge lxd lxd-client snapd
+
+if [ -d ~$user ]
+then
+	# clone repo for nano syntax highlight
+	info_echo "Cloning nano rc repo"
+	git clone https://github.com/scopatz/nanorc.git ~$user/.nano
+	chown -R $user:$user .nano
+	chmod -R go-w ~$user/.nano
+	ln -s ~$user/.nano/nanorc ~$user/.nanorc
+	chmod $user:$user ~$user/.nanorc
+else
+	warning_echo "'$user' does not have home directory, ignoreing step to download nanorc"
+fi
 
 info_echo "Script finalised"

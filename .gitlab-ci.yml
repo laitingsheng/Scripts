@@ -1,6 +1,11 @@
-ubuntu:bionic:
+ubuntu:base:
   image:
     name: ubuntu:bionic
   script:
-    - bash ./ubuntu-base.sh -d bionic -l us -u $(whoami)
-    - bash test/ubuntu/base.sh
+    - bash ./ubuntu.base.sh -d bionic -l us -u $(whoami)
+
+ubuntu:desktop:
+  image:
+    name: ubuntu:bionic
+  script:
+    - bash ./ubuntu.desktop.sh -d bionic -l us -u $(whoami)

@@ -5,19 +5,6 @@ set -eu
 
 source ubuntu-base.sh $*
 
-if [ ! -d ~$user ]
-then
-	warning_echo "'$user' does not have home directory, ignoreing step to download nanorc"
-else
-	# clone repo for nano syntax highlight
-	info_echo "Cloning nano rc repo"
-	git clone https://github.com/scopatz/nanorc.git ~$user/.nano
-	chown -R $user:$user .nano
-	chmod -R go-w ~$user/.nano
-	ln -s ~$user/.nano/nanorc ~$user/.nanorc
-	chmod $user:$user ~$user/.nanorc
-fi
-
 # install extra packages
 apt-get -y install <<- EOL
 libboost-dev-all
