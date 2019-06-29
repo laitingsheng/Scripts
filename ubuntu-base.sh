@@ -40,6 +40,7 @@ do
 				warning_echo "'$user' is an invalid user name"
 				exit 1
 			fi
+			cat /etc/passwd
 			echo ~$user
 			;;
 		w )
