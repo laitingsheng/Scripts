@@ -69,16 +69,13 @@ then
 	sed -i "s/%INTEROP_APPEND_WINDOWS_PATH%/$win_path/" /etc/wsl.conf
 fi
 
-info_echo "Removing unnecessary lxd and snap"
-apt-get -y purge lxd lxd-client snapd
-
 # generate sources.list from template
 install -o root -g root -m 644 templates/ubuntu.sources.list.template /etc/apt/sources.list
 sed -i "s/%COMMAND%/deb/;s/%PREFIX%/$loc./;s/%DIST%/$dist/" /etc/apt/sources.list
 
 # manage packages
 info_echo "Refreshing the index and installing/upgrading packages"
-sudo apt-get update
+apt-get update
 apt-get -y install <<- EOL
 gcc
 g++
@@ -99,5 +96,9 @@ EOL
 # Upgrade the rest
 apt-get -y dist-upgrade
 apt-get -y upgrade
+
+# Remove Ubuntu builtin container
+info_echo "Removing unnecessary lxd and snap"
+apt-get -y purge lxd lxd-client snapd
 
 info_echo "Script finalised"
