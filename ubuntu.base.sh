@@ -3,6 +3,9 @@
 # exit on error & prevent unset variable
 set -eu
 
+# disable interactive mode
+export DEBIAN_FRONTEND=noninteractive
+
 # source the common file
 source utils.sh
 
@@ -71,10 +74,14 @@ fi
 install -o root -g root -m 644 templates/ubuntu.sources.list.template /etc/apt/sources.list
 sed -i "s/%COMMAND%/deb/;s/%PREFIX%/$loc./;s/%DIST%/$dist/" /etc/apt/sources.list
 
+# set timezone for tzdata
+ln -fs /usr/share/zoneinfo/Australia/Melbourne /etc/localtime
+dpkg-reconfigure -f noninteractive tzdata
+
 # manage packages
 info_echo "Refreshing the index and installing/upgrading packages"
 apt-get update
-apt-get install -y bash gcc g++ make wget curl perl git nano moreutils parallel htop net-tools expect tree vim
+apt-get install -y bash gcc g++ make wget curl perl git nano moreutils parallel htop net-tools expect tree vim sudo
 # Upgrade the rest
 apt-get dist-upgrade -y
 apt-get upgrade -y
