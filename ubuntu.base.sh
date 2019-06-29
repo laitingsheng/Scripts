@@ -80,7 +80,7 @@ ln -fs /usr/share/zoneinfo/Australia/Melbourne /etc/localtime
 # manage packages
 info_echo "Refreshing the index and installing/upgrading packages"
 apt-get update
-apt-get install -y bash gcc g++ make wget curl perl git nano moreutils parallel htop net-tools expect tree vim sudo
+apt-get install -y bash sudo cron gcc g++ make wget curl perl git nano moreutils parallel htop net-tools expect tree vim
 # Upgrade the rest
 apt-get dist-upgrade -y
 apt-get upgrade -y

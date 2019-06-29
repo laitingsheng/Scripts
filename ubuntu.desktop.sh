@@ -6,7 +6,7 @@ set -eu
 source ubuntu.base.sh $*
 
 # install extra packages
-apt-get -y install libboost-dev-all clang clang-format clang-tidy clang-tools llvm valgrind gdb lldb openjdk-8-jdk openjdk-11-jdk haskell-platform
+apt-get -y install libboost-all-dev clang clang-format clang-tidy clang-tools llvm valgrind gdb lldb openjdk-8-jdk openjdk-11-jdk haskell-platform
 
 # official Docker repo
 info_echo "Adding Docker repo"
