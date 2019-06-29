@@ -6,24 +6,11 @@ set -eu
 source ubuntu.base.sh $*
 
 # install extra packages
-apt-get -y install <<- EOL
-libboost-dev-all
-clang
-clang-format
-clang-tidy
-clang-tools
-llvm
-valgrind
-gdb
-lldb
-openjdk-8-jdk
-openjdk-11-jdk
-haskell-platform
-EOL
+apt-get -y install libboost-dev-all clang clang-format clang-tidy clang-tools llvm valgrind gdb lldb openjdk-8-jdk openjdk-11-jdk haskell-platform
 
 # official Docker repo
 info_echo "Adding Docker repo"
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 echo "deb https://download.docker.com/linux/ubuntu $distro stable" >> /etc/apt/sources.list
 
 # official Ansible repo
@@ -31,12 +18,7 @@ info_echo "Adding Ansible PPA"
 add-apt-repository ppa:ansible/ansible
 
 info_echo "Installing Docker & Ansible"
-apt-get -y install <<- EOL
-ansible
-docker-ce
-docker-ce-cli
-containerd.io
-EOL
+apt-get install -y ansible docker-ce docker-ce-cli containerd.io
 
 # Miniconda 3
 info_echo "downloading Miniconda 3"

@@ -74,31 +74,14 @@ sed -i "s/%COMMAND%/deb/;s/%PREFIX%/$loc./;s/%DIST%/$dist/" /etc/apt/sources.lis
 # manage packages
 info_echo "Refreshing the index and installing/upgrading packages"
 apt-get update
-apt-get -y install <<- EOL
-bash
-gcc
-g++
-make
-wget
-curl
-perl
-git
-nano
-moreutils
-parallel
-htop
-net-tools
-expect
-tree
-vim
-EOL
+apt-get install -y bash gcc g++ make wget curl perl git nano moreutils parallel htop net-tools expect tree vim
 # Upgrade the rest
-apt-get -y dist-upgrade
-apt-get -y upgrade
+apt-get dist-upgrade -y
+apt-get upgrade -y
 
 # Remove Ubuntu builtin container
 info_echo "Removing unnecessary lxd and snap"
-apt-get -y purge lxd lxd-client snapd
+apt-get purge lxd lxd-client snapd -y
 
 if [ -d ~$user ]
 then
@@ -110,7 +93,7 @@ then
 	ln -s ~$user/.nano/nanorc ~$user/.nanorc
 	chmod $user:$user ~$user/.nanorc
 else
-	warning_echo "'$user' does not have home directory, ignoreing step to download nanorc"
+	warning_echo "'$user' does not have home directory, ignoring step to download nanorc"
 fi
 
 info_echo "Script finalised"
