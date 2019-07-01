@@ -18,3 +18,8 @@ jobs:
           name: Initialise
           command: |
             bash ./ubuntu.desktop.sh -d bionic -l us -u $(whoami)
+workflows:
+  multiple-builds:
+    jobs:
+      - ubuntu:base
+      - ubuntu:desktop
