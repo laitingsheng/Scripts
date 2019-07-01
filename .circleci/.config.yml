@@ -1,0 +1,20 @@
+version: 2
+jobs:
+  ubuntu:base:
+    docker:
+      - image: ubuntu:bionic
+    steps:
+      - checkout
+      - run:
+          name: Initialise
+          command: |
+            bash ./ubuntu.base.sh -d bionic -l us -u $(whoami)
+  ubuntu:desktop:
+    docker:
+      - image: ubuntu:bionic
+    steps:
+      - checkout
+      - run:
+          name: Initialise
+          command: |
+            bash ./ubuntu.desktop.sh -d bionic -l us -u $(whoami)
