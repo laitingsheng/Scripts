@@ -19,6 +19,7 @@ jobs:
           command: |
             bash ./ubuntu.desktop.sh -d bionic -l us -u $(whoami)
 workflows:
+  version: 2
   multiple-builds:
     jobs:
       - ubuntu:base
