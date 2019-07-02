@@ -94,7 +94,7 @@ update-locale LANG=en_AU.UTF-8 LC_ALL=en_AU.UTF-8 LANGUAGE=en_AU.UTF-8
 info_echo "Removing unnecessary lxd and snap"
 apt-get purge lxd lxd-client snapd -y
 
-home=$(echo ~$user | xargs echo)
+home=$(eval echo ~$user)
 
 if [ -d $home ]
 then
