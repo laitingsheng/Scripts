@@ -94,15 +94,17 @@ update-locale LANG=en_AU.UTF-8 LC_ALL=en_AU.UTF-8 LANGUAGE=en_AU.UTF-8
 info_echo "Removing unnecessary lxd and snap"
 apt-get purge lxd lxd-client snapd -y
 
-if [ -d ~$user ]
+if [ -d $HOME ]
 then
     # clone repo for nano syntax highlight
     info_echo "Cloning nano rc repo"
-    git clone https://github.com/scopatz/nanorc.git ~$user/.nano
+    git clone https://github.com/scopatz/nanorc.git $HOME/.nano
     chown -R $user:$user .nano
-    chmod -R go-w ~$user/.nano
-    ln -s ~$user/.nano/nanorc ~$user/.nanorc
-    chmod $user:$user ~$user/.nanorc
+    chmod -R go-w $HOME/.nano
+    cd $HOME
+    ln -s .nano/nanorc .nanorc
+    cd -
+    chmod $user:$user $HOME/.nanorc
 else
     info_echo "'$user' does not have home directory, ignoring step to download nanorc"
 fi
