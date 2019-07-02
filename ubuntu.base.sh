@@ -106,7 +106,7 @@ then
     chown -R $user:$user .nano
     chmod -R go-w .nano
     ln -sf .nano/nanorc .nanorc
-    chmod $user:$user .nanorc
+    chown $user:$user .nanorc
     cd -
 else
     info_echo "'$user' does not have home directory, ignoring step to download nanorc"

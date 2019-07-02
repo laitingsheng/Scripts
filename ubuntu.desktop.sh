@@ -30,3 +30,5 @@ rm -f /tmp/install.sh
 # update/create conda environments
 conda env update -f conda/base.yml
 conda env create -f conda/MLNN3-cpu-linux.yml
+
+info_echo "Desktop script finalised"
