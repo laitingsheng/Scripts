@@ -22,9 +22,11 @@ apt-get install -y ansible docker-ce docker-ce-cli containerd.io
 
 # Miniconda 3
 info_echo "downloading Miniconda 3"
-wget -O install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-chmod 755 install.sh
+wget -O /tmp/install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 info_echo "installing Miniconda 3"
-mkdir -p /var/lib/conda
-./install.sh -bf -p /var/lib/conda
-rm -f install.sh
+sh /tmp/install.sh -bf -p /usr/local
+rm -f /tmp/install.sh
+
+# update/create conda environments
+conda env update -f conda/base.yml
+conda env create -f conda/MLNN3-cpu-linux.yml
