@@ -8,7 +8,8 @@ jobs:
       - run:
           name: Initialise
           command: |
-            bash ./ubuntu.base.sh -d bionic -l us -u $(whoami)
+            bash ubuntu.base.sh -d bionic -l us -u $(whoami)
+            bash ubuntu.base.test.sh
   ubuntu:desktop:
     docker:
       - image: ubuntu:bionic
@@ -17,10 +18,17 @@ jobs:
       - run:
           name: Initialise
           command: |
-            bash ./ubuntu.desktop.sh -d bionic -l us -u $(whoami)
+            bash ubuntu.desktop.sh -d bionic -l us -u $(whoami)
+            bash ubuntu.desktop.test.sh
 workflows:
   version: 2
-  multiple-builds:
+  multiple-tests:
     jobs:
-      - ubuntu:base
-      - ubuntu:desktop
+      - ubuntu:base:
+          filters:
+            branches:
+              only: master
+      - ubuntu:desktop:
+          filters:
+            branches:
+              only: master

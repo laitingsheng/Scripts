@@ -6,18 +6,19 @@ set -e
 # disable interactive mode
 export DEBIAN_FRONTEND=noninteractive
 
-# test cases
+# test installed packages
 while read cmd
 do
     which $cmd
 done <<- EOL
-bash
 sudo
 crontab
 gcc
 g++
+make
 wget
 curl
+perl
 git
 nano
 parallel
