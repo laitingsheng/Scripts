@@ -9,7 +9,7 @@ jobs:
         desktop:
           config: desktop
       maxParallel: 2
-    container: ubuntu:bionic
     steps:
-      - script: sudo bash ubuntu.$(config).sh -d bionic -l us -u $(whoami)
-      - script: bash ubuntu.$(config).test.sh
+      - bash: |
+          set -ex
+          sudo docker run -v $PWD:/repo ubuntu:bionic /bin/bash -c "bash /repo/ubuntu.$(config).sh; bash /repo/ubuntu.$(config).test.sh"
