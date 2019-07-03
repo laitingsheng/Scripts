@@ -1,15 +1,15 @@
 jobs:
-  - job: ubuntu_base
+  - job: ubuntu
     pool:
       vmImage: "ubuntu-16.04"
+    strategy:
+      parallel: 2
+      matrix:
+        base:
+          config: base
+        desktop:
+          config: desktop
     container: ubuntu:bionic
     steps:
-      - bash: sudo bash ubuntu.base.sh -d bionic -l us -u $(whoami)
-      - bash: bash ubuntu.base.test.sh
-  - job: ubuntu_desktop
-    pool:
-      vmImage: "ubuntu-16.04"
-    container: ubuntu:bionic
-    steps:
-      - bash: sudo bash ubuntu.desktop.sh -d bionic -l us -u $(whoami)
-      - bash: bash ubuntu.desktop.test.sh
+      - script: bash ubuntu.$[variables['config']].sh -d bionic -l us -u $(whoami)
+      - script: bash ubuntu.$[variables['config']].test.sh
