@@ -27,8 +27,8 @@ workflows:
       - ubuntu:base:
           filters:
             branches:
-              ignore: master
+              only: master
       - ubuntu:desktop:
           filters:
             branches:
-              ignore: master
+              only: master

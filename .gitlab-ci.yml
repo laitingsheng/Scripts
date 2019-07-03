@@ -15,8 +15,5 @@ ubuntu:desktop:
     - bash ubuntu.desktop.test.sh
   only:
     changes:
-      - ubuntu.base.sh
-      - ubuntu.base.test.sh
       - ubuntu.desktop.sh
       - ubuntu.desktop.test.sh
-      - conda/*.yml
