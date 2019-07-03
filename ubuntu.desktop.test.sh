@@ -22,7 +22,6 @@ ghc
 stack
 docker
 docker-compose
-docker-machine
 ansible
 EOL
 
