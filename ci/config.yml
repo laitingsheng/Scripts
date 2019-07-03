@@ -12,4 +12,4 @@ jobs:
     steps:
       - bash: |
           set -ex
-          sudo docker run -v $PWD:/repo ubuntu:bionic /bin/bash -c "set -ex; ls -alF /repo; bash /repo/ubuntu.$(config).sh; bash /repo/ubuntu.$(config).test.sh"
+          sudo docker run -v $PWD:/repo ubuntu:bionic /bin/bash -c "set -ex; cd /repo; bash ubuntu.$(config).sh; bash ubuntu.$(config).test.sh"
