@@ -3,13 +3,13 @@ jobs:
     pool:
       vmImage: "ubuntu-16.04"
     strategy:
-      parallel: 2
       matrix:
         base:
           config: base
         desktop:
           config: desktop
+      maxParallel: 2
     container: ubuntu:bionic
     steps:
-      - script: bash ubuntu.$[variables['config']].sh -d bionic -l us -u $(whoami)
-      - script: bash ubuntu.$[variables['config']].test.sh
+      - script: bash ubuntu.$(config).sh -d bionic -l us -u $(whoami)
+      - script: bash ubuntu.$(config).test.sh
