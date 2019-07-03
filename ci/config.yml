@@ -11,5 +11,5 @@ jobs:
       maxParallel: 2
     container: ubuntu:bionic
     steps:
-      - script: bash ubuntu.$(config).sh -d bionic -l us -u $(whoami)
+      - script: sudo bash ubuntu.$(config).sh -d bionic -l us -u $(whoami)
       - script: bash ubuntu.$(config).test.sh
