@@ -3,5 +3,5 @@ jobs:
     pool:
       vmImage: "ubuntu-16.04"
     steps:
-      - script: bash ubuntu.base.sh -d xenial -l us -u $(whoami)
-      - script: bash ubuntu.base.test.sh
+      - script: sudo bash ubuntu.base.sh -d xenial -l us -u $(whoami)
+      - script: sudo bash ubuntu.base.test.sh
