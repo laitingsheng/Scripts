@@ -13,8 +13,3 @@ jobs:
       - bash: |
           set -ex
           sudo docker run -v $PWD:/build ubuntu:bionic /bin/bash -c "cd /build; bash ci/ubuntu.sh $(config)"
-    trigger:
-      paths:
-        include:
-          - ubuntu.$(config).sh
-          - ubuntu.$(config).test.sh
