@@ -1,4 +1,4 @@
-.ubuntu:template: &ubuntu:template
+.ubuntu:template: &ubuntu_template
   image: ubuntu:bionic
   script:
     - bash ubuntu.$config.sh -d bionic -l us -u $(whoami)
@@ -7,7 +7,7 @@
 ubuntu:base:
   variables:
     config: base
-  <<: *ubuntu:template
+  <<: *ubuntu_template
   # only:
   #   changes:
   #     - ubuntu.base.sh
@@ -16,7 +16,7 @@ ubuntu:base:
 ubuntu:desktop:
   variables:
     config: desktop
-  <<: *ubuntu:template
+  <<: *ubuntu_template
   # only:
   #   changes:
   #     - ubuntu.base.sh
