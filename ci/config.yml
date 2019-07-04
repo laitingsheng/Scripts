@@ -18,7 +18,7 @@ jobs:
     pool:
       vmImage: "windows-2019"
     steps:
-      - bash:
+      - bash: |
           set -ex
           sudo bash ubuntu.desktop.sh -d bionic -l us -u $(whoami)
           bash ubuntu.desktop.test.sh
