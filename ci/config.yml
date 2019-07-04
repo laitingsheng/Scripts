@@ -1,5 +1,5 @@
 jobs:
-  - job: ubuntu
+  - job: Ubuntu
     pool:
       vmImage: "ubuntu-16.04"
     strategy:
@@ -12,4 +12,13 @@ jobs:
     steps:
       - bash: |
           set -ex
-          sudo docker run -v $PWD:/build ubuntu:bionic /bin/bash -c "cd /build; bash ci/ubuntu.sh $(config)"
+          sudo bash ubuntu.$(config).sh -d bionic -l us -u $(whoami)
+          bash ubuntu.$(config).test.sh
+  - job: WSL
+    pool:
+      vmImage: "windows-2019"
+    steps:
+      - bash:
+          set -ex
+          sudo bash ubuntu.desktop.sh -d bionic -l us -u $(whoami)
+          bash ubuntu.desktop.test.sh
