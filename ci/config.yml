@@ -1,5 +1,5 @@
 jobs:
-  - job: Ubuntu
+  - job: ubuntu
     pool:
       vmImage: "ubuntu-16.04"
     strategy:
@@ -12,5 +12,4 @@ jobs:
     steps:
       - bash: |
           set -ex
-          sudo bash ubuntu.$(config).sh -d bionic -l us -u $(whoami)
-          bash ubuntu.$(config).test.sh
+          sudo docker run -v $PWD:/build ubuntu:bionic /bin/bash -c "cd /build; bash ci/ubuntu.sh $(config)"
