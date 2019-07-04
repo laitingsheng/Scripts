@@ -7,7 +7,7 @@ services:
 jobs:
   include:
     - script:
-        - sudo docker run -v $PWD:/build ubuntu:bionic /bin/bash -c "cd /build; bash ci/ubuntu.sh $(config)"
+        - sudo docker run -v $PWD:/build ubuntu:bionic /bin/bash -c "cd /build; bash ci/ubuntu.sh $config"
       env:
         matrix:
           - config=base
