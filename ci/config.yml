@@ -1,7 +1,5 @@
 trigger:
-  branches:
-    exclude:
-      - master
+  - master
 
 jobs:
   - job: ubuntu

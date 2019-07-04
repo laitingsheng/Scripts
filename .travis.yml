@@ -11,5 +11,5 @@ script:
   - sudo docker run -v $PWD:/build ubuntu:bionic /bin/bash -c "cd /build; bash ci/ubuntu.sh $config"
 
 branches:
-  except:
+  only:
     - master
