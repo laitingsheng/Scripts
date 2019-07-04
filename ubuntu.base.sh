@@ -80,10 +80,10 @@ ln -fs /usr/share/zoneinfo/Australia/Melbourne /etc/localtime
 # manage packages
 info_echo "Refreshing the index and installing/upgrading packages"
 apt-get update
-apt-get install -y bash sudo cron locales software-properties-common gcc g++ make wget curl perl git nano moreutils parallel htop net-tools expect tree vim
+apt-get install -fy bash sudo cron locales software-properties-common gcc g++ make wget curl perl git nano moreutils parallel htop net-tools expect tree vim
 # Upgrade the rest
-apt-get dist-upgrade -y
-apt-get upgrade -y
+apt-get dist-upgrade -fy
+apt-get upgrade -fy
 
 # Generate & change locale
 info_echo "Changing locale"
@@ -92,7 +92,7 @@ update-locale LANG=en_AU.UTF-8 LC_ALL=en_AU.UTF-8 LANGUAGE=en_AU.UTF-8
 
 # Remove Ubuntu builtin container
 info_echo "Removing unnecessary lxd and snap"
-apt-get purge lxd lxd-client snapd -y
+apt-get purge lxd lxd-client snapd -fy
 
 home=$(eval echo ~$user)
 

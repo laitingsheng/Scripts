@@ -6,7 +6,7 @@ set -eu
 source ubuntu.base.sh $*
 
 # install extra packages
-apt-get -y install libboost-all-dev clang clang-format clang-tidy clang-tools llvm valgrind gdb lldb openjdk-8-jdk openjdk-11-jdk haskell-platform haskell-stack
+apt-get install -fy libboost-all-dev clang clang-format clang-tidy clang-tools llvm valgrind gdb lldb openjdk-8-jdk openjdk-11-jdk haskell-platform haskell-stack
 
 # official Docker repo
 info_echo "Adding Docker repo"
@@ -18,7 +18,7 @@ info_echo "Adding Ansible PPA"
 add-apt-repository -uy ppa:ansible/ansible
 
 info_echo "Installing Docker & Ansible"
-apt-get install -y ansible docker-ce docker-ce-cli containerd.io
+apt-get install -fy ansible docker-ce docker-ce-cli containerd.io
 
 # Miniconda 3
 info_echo "downloading Miniconda 3"
