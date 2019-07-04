@@ -1,3 +1,8 @@
+trigger:
+  branches:
+    exclude:
+      - master
+
 jobs:
   - job: ubuntu
     pool:
@@ -10,6 +15,4 @@ jobs:
           config: desktop
       maxParallel: 2
     steps:
-      - bash: |
-          set -ex
-          sudo docker run -v $PWD:/build ubuntu:bionic /bin/bash -c "cd /build; bash ci/ubuntu.sh $(config)"
+      - bash: sudo docker run -v $PWD:/build ubuntu:bionic /bin/bash -c "cd /build; bash ci/ubuntu.sh $(config)"
