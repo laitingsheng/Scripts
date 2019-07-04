@@ -3,24 +3,15 @@
   script:
     - bash ubuntu.$config.sh -d bionic -l us -u $(whoami)
     - bash ubuntu.$config.test.sh
+  only:
+    - master
 
 ubuntu:base:
   variables:
     config: base
   <<: *ubuntu_template
-  only:
-    changes:
-      - ubuntu.base.sh
-      - ubuntu.base.test.sh
 
 ubuntu:desktop:
   variables:
     config: desktop
   <<: *ubuntu_template
-  only:
-    changes:
-      - ubuntu.base.sh
-      - ubuntu.base.test.sh
-      - ubuntu.desktop.sh
-      - ubuntu.desktop.test.sh
-      - conda/*.yml
