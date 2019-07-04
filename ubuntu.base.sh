@@ -80,10 +80,9 @@ ln -fs /usr/share/zoneinfo/Australia/Melbourne /etc/localtime
 # manage packages
 info_echo "Refreshing the index and installing/upgrading packages"
 apt-get update
-apt-get install -fy bash sudo cron locales software-properties-common gcc g++ make wget curl perl git nano moreutils parallel htop net-tools expect tree vim
-# Upgrade the rest
 apt-get dist-upgrade -fy
 apt-get upgrade -fy
+apt-get install -fy bash sudo cron locales software-properties-common gcc g++ make wget curl perl git nano moreutils parallel htop net-tools expect tree vim
 
 # Generate & change locale
 info_echo "Changing locale"

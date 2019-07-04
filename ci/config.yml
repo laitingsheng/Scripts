@@ -14,11 +14,3 @@ jobs:
           set -ex
           sudo bash ubuntu.$(config).sh -d bionic -l us -u $(whoami)
           bash ubuntu.$(config).test.sh
-  - job: WSL
-    pool:
-      vmImage: "windows-2019"
-    steps:
-      - bash: |
-          set -ex
-          sudo bash ubuntu.desktop.sh -d bionic -l us -u $(whoami)
-          bash ubuntu.desktop.test.sh
