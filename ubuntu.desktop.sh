@@ -6,19 +6,16 @@ set -eu
 source ubuntu.base.sh $*
 
 # install extra packages
-apt-get install -fy libboost-all-dev clang clang-format clang-tidy clang-tools llvm valgrind gdb lldb openjdk-8-jdk openjdk-11-jdk haskell-platform haskell-stack
+apt-get install -fy libboost-all-dev clang clang-format clang-tidy clang-tools llvm valgrind gdb lldb openjdk-8-jdk openjdk-11-jdk haskell-platform haskell-stack python-openstacksdk python3-openstacksdk python-openstackclient python3-openstackclient
 
 # official Docker repo
 info_echo "Adding Docker repo"
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 echo "deb https://download.docker.com/linux/ubuntu $dist stable" >> /etc/apt/sources.list
+apt-get update
 
-# official Ansible repo
-info_echo "Adding Ansible PPA"
-add-apt-repository -uy ppa:ansible/ansible
-
-info_echo "Installing Docker & Ansible"
-apt-get install -fy ansible docker-ce docker-ce-cli containerd.io
+info_echo "Installing Docker"
+apt-get install -fy docker-ce docker-ce-cli containerd.io
 
 # Miniconda 3
 info_echo "downloading Miniconda 3"
@@ -28,7 +25,6 @@ sh /tmp/install.sh -bf -p /usr/local
 rm -f /tmp/install.sh
 
 # update/create conda environments
-conda env update -f conda/base.yml
-conda env create -f conda/MLNN3-cpu-linux.yml
+conda env update -f conda/linux/base.yml
 
 info_echo "Desktop script finalised"

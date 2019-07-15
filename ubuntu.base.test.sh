@@ -28,4 +28,5 @@ expect
 tree
 vim
 vimtutor
+mvn
 EOL
