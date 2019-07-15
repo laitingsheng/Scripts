@@ -3,7 +3,7 @@
   script:
     - bash ubuntu.$config.sh -d bionic -l us -u $(whoami)
     - bash ubuntu.$config.test.sh
-  only:
+  except:
     - master
 
 ubuntu:base:

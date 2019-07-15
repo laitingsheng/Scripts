@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
 
-# exit on error & prevent unset variable
-set -eu
-
 source ubuntu.base.sh $*
 
 # install extra packages
-apt-get install -fy libboost-all-dev clang clang-format clang-tidy clang-tools llvm valgrind gdb lldb openjdk-8-jdk openjdk-11-jdk haskell-platform haskell-stack python-openstacksdk python3-openstacksdk python-openstackclient python3-openstackclient
+apt-get install -fy libboost-all-dev clang clang-format clang-tidy clang-tools llvm valgrind gdb lldb openjdk-8-jdk openjdk-11-jdk haskell-platform haskell-stack python-openstacksdk python3-openstacksdk python-openstackclient python3-openstackclient mono-complete
 
 # official Docker repo
 info_echo "Adding Docker repo"
