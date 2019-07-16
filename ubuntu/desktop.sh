@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ubuntu.base.sh $* || exit $?
+source ubuntu/base.sh $* || exit $?
 
 # install extra packages
 xargs apt-get install -fy <<- EOL

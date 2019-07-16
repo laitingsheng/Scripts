@@ -38,6 +38,9 @@ Extra Options:
 EOL
 }
 
+# install curl for basic validation
+apt-get install -fy curl
+
 # default settings
 dist='bionic'
 loc='au'
