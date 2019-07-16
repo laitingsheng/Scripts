@@ -38,9 +38,6 @@ Extra Options:
 EOL
 }
 
-# install curl for basic validation
-apt-get install -fy curl
-
 # default settings
 dist='bionic'
 loc='au'
@@ -49,7 +46,7 @@ win_path='false'
 
 test_url()
 {
-    curl -fILs "$1" > /dev/null
+    wget -nd -nH -O /dev/null -q "$1"
 }
 
 # parse options

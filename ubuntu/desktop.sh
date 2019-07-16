@@ -30,9 +30,9 @@ info_echo "Installing Docker"
 apt-get install -fy docker-ce docker-ce-cli containerd.io
 
 # Miniconda 3
-info_echo "downloading Miniconda 3"
+info_echo "Downloading Miniconda 3"
 wget -O /tmp/install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-info_echo "installing Miniconda 3"
+info_echo "Installing Miniconda 3"
 sh /tmp/install.sh -bf -p /usr/local
 rm -f /tmp/install.sh
 
