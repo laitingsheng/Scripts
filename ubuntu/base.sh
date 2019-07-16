@@ -7,7 +7,7 @@ export DEBIAN_FRONTEND=noninteractive
 umask 0022
 
 # source the common file
-source utils.sh
+source utils.sh || exit $?
 
 print_usage()
 {
@@ -203,7 +203,33 @@ info_echo 'Refreshing the index and installing/upgrading packages'
 apt-get update
 apt-get dist-upgrade -fy
 apt-get upgrade -fy
-apt-get install -fy bash sudo cron locales software-properties-common gcc g++ make wget curl perl git nano moreutils parallel htop net-tools expect tree vim python python-pip python3 python3-pip maven
+xargs apt-get install -fy <<- EOL
+bash
+sudo
+cron
+locales
+software-properties-common
+gcc
+g++
+make
+wget
+curl
+perl
+git
+nano
+moreutils
+parallel
+htop
+net-tools
+expect
+tree
+vim
+python
+python-pip
+python3
+python3-pip
+maven
+EOL
 
 # Generate & change locale
 locale="en_${loc^^}.utf8"

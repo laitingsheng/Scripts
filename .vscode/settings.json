@@ -1,35 +1,5 @@
 {
     "files.associations": {
         "**/ci/*.yml": "azure-pipelines"
-    },
-    "cSpell.words": [
-        "ansible",
-        "cffi",
-        "conda",
-        "contrib",
-        "cors",
-        "cython",
-        "cytoolz",
-        "flask",
-        "ipykernel",
-        "ipyparallel",
-        "ipython",
-        "ipywidgets",
-        "itertools",
-        "jupyter",
-        "jupyterlab",
-        "more",
-        "mypy",
-        "nbextensions",
-        "openstacksdk",
-        "pcre",
-        "pefile",
-        "psutil",
-        "pycodestyle",
-        "pycurl",
-        "pylint",
-        "toolz",
-        "widgetsnbextension",
-        "wxpython"
-    ]
+    }
 }
