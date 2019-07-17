@@ -1,13 +1,24 @@
 #!/usr/bin/env bash
 
+# exit on error
+set -eu
+
+# source the common file
+source utils.sh || exit $?
+
+EXIT_PRINT()
+{
+    # [ ${CURRENT_STEP:-''} -a ${ON_EXIT_MSG:-''} ] || exit
+    [ $? -ne 0 ] && printf $RED || printf $GREEN
+    printf "Current step: $CURRENT_STEP\nMessage: $ON_EXIT_MSG\n${NC}"
+}
+trap EXIT_PRINT EXIT
+
 # disable interactive mode
 export DEBIAN_FRONTEND=noninteractive
 
 # fix current umask
 umask 0022
-
-# source the common file
-source utils.sh || exit $?
 
 print_usage()
 {
@@ -27,9 +38,6 @@ Standard Options:
     -r repository URL
         Can be a custom repository URL
         Default: http://[locale].archive.ubuntu.com/ubuntu or fall back to http://archive.ubuntu.com/ubuntu if the previous URL is invalid
-    -u user
-        Specify the main user, can be root, usually supplied with \$(whoami)
-        Default: N/A, must be set
     -w
         Set interop.appendWindowsPath option in /etc/wsl.conf to true
 Extra Options:
@@ -44,169 +52,125 @@ loc='au'
 declare -A prefixes
 win_path='false'
 
-test_url()
-{
-    wget -nd -nH -O /dev/null -q "$1"
-}
-
 # parse options
-while getopts ':d:hl:p:r:u:w' opt
+while getopts ':d:hl:p:r:w' opt
 do
     case $opt in
         d )
+            CURRENT_STEP='Validate $dist pattern'
             dist=$OPTARG
-
-            # validate $dist - validate pattern
-            echo $dist | grep -Eq '^[a-z]+$'
-            if [ $? -ne 0 ]
-            then
-                warning_echo "'$dist' should contain lowercase letters only"
-                exit 1
-            fi
-
-            # validate $dist - validate if still support
-            test_url "http://releases.ubuntu.com/$dist"
-            if [ $? -ne 0 ]
-            then
-                warning_echo "'$dist' is not a valid distribution or no longer supported"
-                exit 1
-            fi
+            ON_EXIT_MSG="'$dist' should contain lowercase letters only"
+            grep -Eq '^[a-z]+$' <<< $dist
             ;;
         h)
             print_usage
             exit 0
             ;;
         l )
+            CURRENT_STEP='Validate $loc pattern'
             loc=$OPTARG
-            # validate $loc
-            echo $loc | grep -Eq '^[a-z]+$'
-            if [ $? -ne 0 ]
-            then
-                warning_echo "'$loc' is not a valid location"
-                exit 1
-            fi
+            ON_EXIT_MSG="'$loc' should contain lowercase letters only"
+            grep -Eq '^[a-z]+$' <<< $dist
             ;;
         p)
-            eval declare -A prefixes=($(echo $OPTARG | sed 's/:/\n/' | awk -F= '{print "["$1"]="$2}'))
+            CURRENT_STEP='Validate $prefixes configuration'
+            prefixes=($(echo $OPTARG | sed 's/:/\n/' | awk -F= '{print "["$1"]="$2}'))
             for ind in "${!prefixes[@]}"
             do
-                if [ ! -d "${prefixes[$ind]}" ]
-                then
-                    warning_echo "'$ind' has an invalid path '${prefixes[$ind]}'"
-                    exit 1
-                fi
+                ON_EXIT_MSG="'$ind' has an invalid path '${prefixes[$ind]}'"
+                [ -d "${prefixes[$ind]}" ]
             done
             ;;
         r )
             repo=$OPTARG
-
-            test_url "$repo"
-            if [ $? -ne 0 ]
-            then
-                warning_echo "'$repo' is not a valid URL"
-                exit 1
-            fi
-            ;;
-        u )
-            user=$OPTARG
-
-            id -u "$user" &> /dev/null
-            if [ $? -ne 0 ]
-            then
-                warning_echo "'$user' is an invalid user name"
-                exit 1
-            fi
             ;;
         w )
             win_path='true'
             ;;
         \? )
-            warning_echo "unknown argument '-$OPTARG'"
+            CURRENT_STEP='Parse arguments'
+            ON_EXIT_MSG="unknown argument '-$OPTARG'"
             print_usage
             exit 1
             ;;
         : )
-            warning_echo "'-$OPTARG' requires an argument"
+            CURRENT_STEP='Parse arguments'
+            ON_EXIT_MSG="'-$OPTARG' requires an argument"
             print_usage
             exit 1
             ;;
     esac
 done
 
-# $user is mandatory
-[ -z "$user" ] && warning_echo 'user was not set' && exit 1
-
 # check if current is root
-[ $EUID -ne 0 ] && warning_echo "This script must be run as root, use 'sudo $0 $*' instead" && exit 126
-
-# possible backup repositories
-loc_repo="http://$loc.archive.ubuntu.com/ubuntu"
-default_repo='http://archive.ubuntu.com/ubuntu'
-
-# export function to be used in parallel
-export -f test_url
-# function to validate a given repository URL combined with the given distribution
-POOLS=($dist $dist-backports $dist-proposed $dist-security $dist-updates $dist-invalid)
-test_repo()
-{
-    parallel -d ' ' -j 200% --halt 2 "test_url '$1/dists/{}'" ::: "${POOLS[@]}" 2> /dev/null
-}
-
-# validate if $repo is set
-if [ "$repo" ]
+if [ $EUID -ne 0 ]
 then
-    test_repo $repo
-    if [ $? -ne 0 ]
-    then
-        warning_echo "'$repo' is not a valid repository, attempting '$loc_repo'"
-        unset repo
-    fi
-fi
-# use $loc_repo if $repo is unset
-if [ -z $repo ]
-then
-    test_repo $loc_repo
-    [ $? -eq 0 ] && repo=$loc_repo || warning_echo "'$loc_repo' is not a valid URL, falling back to '$default_repo'"
-fi
-# falling back to $default_repo
-if [ -z $repo ]
-then
-    test_repo $default_repo
-    if [ $? -ne 0 ]
-    then
-        warning_echo "'$default_repo' cannot be fetched, check the Internet connection before proceeding"
-        exit 1
-    else
-        repo=$default_repo
-    fi
+    CURRENT_STEP='Testing if running as root'
+    ON_EXIT_MSG="This script must be run as root, use 'sudo $0 $*' instead"
+    exit 126
 fi
 
 # WSL only
-if uname -a | grep -q Microsoft
+if grep -iq microsoft <(uname -a)
 then
+    CURRENT_STEP='Install wsl.conf to /etc'
+    ON_EXIT_MSG='Fail to install the correct wsl.conf to /etc'
     # add wsl.conf to /etc/ for customised configuration
     info_echo 'Adding wsl.conf to /etc/'
     install -o root -g root -m 644 templates/wsl.conf.template /etc/wsl.conf
     sed -i "s/%INTEROP_APPEND_WINDOWS_PATH%/$win_path/" /etc/wsl.conf
 fi
 
-# generate sources.list from template
-info_echo 'Updating /etc/apt/sources.list'
-install -o root -g root -m 644 templates/ubuntu.sources.list.template /etc/apt/sources.list
-sed -i "s/%COMMAND%/deb/;s/%REPO%/$repo/;s/%DIST%/$dist/" /etc/apt/sources.list
-
+CURRENT_STEP='Update timezone to Australia/Melbourne'
+ON_EXIT_MSG='Fail to set timezone'
 # set timezone for tzdata
 ln -fs /usr/share/zoneinfo/Australia/Melbourne /etc/localtime
 
+CURRENT_STEP='Update locale'
+ON_EXIT_MSG='Fail to set locale'
+# Generate & change locale
+locale="en_${loc^^}.utf8"
+info_echo "Changing locale to $locale"
+locale-gen $locale || exit $?
+update-locale LANG=$locale LC_ALL=$locale LANGUAGE=$locale
+
+CURRENT_STEP='Remove LXC and snapd'
+ON_EXIT_MSG='Fail to purge LXC packages'
+# Remove Ubuntu builtin container
+info_echo 'Removing unnecessary lxd and snap'
+apt-get purge lxd lxd-client snapd -fy
+
+CURRENT_STEP='Modify /etc/apt/sources.list'
+ON_EXIT_MSG='Failed to modify /etc/apt/sources.list'
+# generate sources.list from template
+info_echo 'Updating /etc/apt/sources.list'
+install -o root -g root -m 644 templates/ubuntu.sources.list.template /etc/apt/sources.list
+sed -i "s/%COMMAND%/deb/;s|%REPO%|${repo:-http://${loc:-}${loc:+.}archive.ubuntu.com/ubuntu}|;s/%DIST%/$dist/" /etc/apt/sources.list
+
+CURRENT_STEP='Add Docker to APT repository'
+ON_EXIT_MSG='Fail to add Docker repository'
+# official Docker repo
+info_echo 'Adding Docker repository'
+curl -fsSL 'https://download.docker.com/linux/ubuntu/gpg' | apt-key add -
+echo "deb https://download.docker.com/linux/ubuntu $dist stable" >> /etc/apt/sources.list
+
+CURRENT_STEP='Refresh index'
+ON_EXIT_MSG='Repository URL may not be valid or check the Internet connection'
 # manage packages
 info_echo 'Refreshing the index and installing/upgrading packages'
 apt-get update
 apt-get dist-upgrade -fy
 apt-get upgrade -fy
+
+CURRENT_STEP='Install packages'
+ON_EXIT_MSG="Some of the packges is not available for '$dist' distribution"
 xargs apt-get install -fy <<- EOL
 bash
 sudo
+containerd.io
 cron
+docker-ce
+docker-ce-cli
 locales
 software-properties-common
 gcc
@@ -231,33 +195,5 @@ python3-pip
 maven
 EOL
 
-# Generate & change locale
-locale="en_${loc^^}.utf8"
-info_echo "Changing locale to $locale"
-locale-gen $locale || exit $?
-update-locale LANG=$locale LC_ALL=$locale LANGUAGE=$locale
-
-# Remove Ubuntu builtin container
-info_echo 'Removing unnecessary lxd and snap'
-apt-get purge lxd lxd-client snapd -fy
-
-home=$(eval echo ~$user)
-
-if [ -d $home ]
-then
-    # clone repo for nano syntax highlight
-    old_dir=$(pwd)
-    cd $home
-    rm -rf .nano || exit $?
-    info_echo "Cloning nano rc repo into $home"
-    git clone https://github.com/scopatz/nanorc.git .nano
-    chown -R $user:$user .nano
-    chmod -R go-w .nano
-    ln -fs .nano/nanorc .nanorc
-    chown $user:$user .nanorc
-    cd $old_dir
-else
-    info_echo "'$user' does not have home directory, ignoring step to download nanorc"
-fi
-
-info_echo 'Base script finalised'
+CURRENT_STEP='Fianlised'
+ON_EXIT_MSG='Base script execution completed'
