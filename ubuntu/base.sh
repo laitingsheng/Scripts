@@ -74,7 +74,8 @@ do
             ;;
         p)
             CURRENT_STEP='Validate $prefixes configuration'
-            prefixes=($(echo $OPTARG | sed 's/:/\n/' | awk -F= '{print "["$1"]="$2}'))
+            ON_EXIT_MSG='Prefixes should conform key1=val1:key2=val2:...'
+            eval declare -A prefixes=($(echo $OPTARG | sed 's/:/\n/' | awk -F= '{print "["$1"]="$2}'))
             for ind in "${!prefixes[@]}"
             do
                 ON_EXIT_MSG="'$ind' has an invalid path '${prefixes[$ind]}'"
