@@ -184,6 +184,7 @@ ON_EXIT_MSG='Fail to add Docker repository'
 info_echo 'Adding Docker repository'
 curl -fsSL 'https://download.docker.com/linux/ubuntu/gpg' | apt-key add -
 echo "deb https://download.docker.com/linux/ubuntu $dist stable" >> /etc/apt/sources.list
+apt-get update
 
 CURRENT_STEP='Install Docker'
 ON_EXIT_MSG="Docker stable channel may not be available for '$dist'"
