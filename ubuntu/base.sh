@@ -134,13 +134,6 @@ info_echo 'Updating /etc/apt/sources.list'
 install -o root -g root -m 644 templates/ubuntu.sources.list.template /etc/apt/sources.list
 sed -i "s/%COMMAND%/deb/;s|%REPO%|${repo:-http://${loc:-}${loc:+.}archive.ubuntu.com/ubuntu}|;s/%DIST%/$dist/" /etc/apt/sources.list
 
-CURRENT_STEP='Add Docker to APT repository'
-ON_EXIT_MSG='Fail to add Docker repository'
-# official Docker repo
-info_echo 'Adding Docker repository'
-curl -fsSL 'https://download.docker.com/linux/ubuntu/gpg' | apt-key add -
-echo "deb https://download.docker.com/linux/ubuntu $dist stable" >> /etc/apt/sources.list
-
 CURRENT_STEP='Refresh index'
 ON_EXIT_MSG='Repository URL may not be valid or check the Internet connection'
 # manage packages
@@ -160,10 +153,7 @@ ON_EXIT_MSG="Some of the packges is not available for '$dist' distribution"
 xargs apt-get install -fy <<- EOL
 bash
 sudo
-containerd.io
 cron
-docker-ce
-docker-ce-cli
 locales
 software-properties-common
 gcc
@@ -186,6 +176,22 @@ python-pip
 python3
 python3-pip
 maven
+EOL
+
+CURRENT_STEP='Add Docker to APT repository'
+ON_EXIT_MSG='Fail to add Docker repository'
+# official Docker repo
+info_echo 'Adding Docker repository'
+curl -fsSL 'https://download.docker.com/linux/ubuntu/gpg' | apt-key add -
+echo "deb https://download.docker.com/linux/ubuntu $dist stable" >> /etc/apt/sources.list
+
+CURRENT_STEP='Install Docker'
+ON_EXIT_MSG="Docker stable channel may not be available for '$dist'"
+info_echo 'Installing Docker'
+xargs apt-get install -fy <<- EOL
+containerd.io
+docker-ce
+docker-ce-cli
 EOL
 
 CURRENT_STEP='Update locale'
