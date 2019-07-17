@@ -127,14 +127,6 @@ ON_EXIT_MSG='Fail to set timezone'
 # set timezone for tzdata
 ln -fs /usr/share/zoneinfo/Australia/Melbourne /etc/localtime
 
-CURRENT_STEP='Update locale'
-ON_EXIT_MSG='Fail to set locale'
-# Generate & change locale
-locale="en_${loc^^}.utf8"
-info_echo "Changing locale to $locale"
-locale-gen $locale || exit $?
-update-locale LANG=$locale LC_ALL=$locale LANGUAGE=$locale
-
 CURRENT_STEP='Remove LXC and snapd'
 ON_EXIT_MSG='Fail to purge LXC packages'
 # Remove Ubuntu builtin container
@@ -195,6 +187,14 @@ python3
 python3-pip
 maven
 EOL
+
+CURRENT_STEP='Update locale'
+ON_EXIT_MSG='Fail to set locale'
+# Generate & change locale
+locale="en_${loc^^}.utf8"
+info_echo "Changing locale to $locale"
+locale-gen $locale || exit $?
+update-locale LANG=$locale LC_ALL=$locale LANGUAGE=$locale
 
 CURRENT_STEP='Fianlised'
 ON_EXIT_MSG='Base script execution completed'
