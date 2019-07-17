@@ -127,12 +127,6 @@ ON_EXIT_MSG='Fail to set timezone'
 # set timezone for tzdata
 ln -fs /usr/share/zoneinfo/Australia/Melbourne /etc/localtime
 
-CURRENT_STEP='Remove LXC and snapd'
-ON_EXIT_MSG='Fail to purge LXC packages'
-# Remove Ubuntu builtin container
-info_echo 'Removing unnecessary lxd and snap'
-apt-get purge lxd lxd-client snapd -fy
-
 CURRENT_STEP='Modify /etc/apt/sources.list'
 ON_EXIT_MSG='Failed to modify /etc/apt/sources.list'
 # generate sources.list from template
@@ -154,6 +148,12 @@ info_echo 'Refreshing the index and installing/upgrading packages'
 apt-get update
 apt-get dist-upgrade -fy
 apt-get upgrade -fy
+
+CURRENT_STEP='Remove LXC and snapd'
+ON_EXIT_MSG='Fail to purge LXC packages'
+# Remove Ubuntu builtin container
+info_echo 'Removing unnecessary lxd and snap'
+apt-get purge lxd lxd-client snapd -fy
 
 CURRENT_STEP='Install packages'
 ON_EXIT_MSG="Some of the packges is not available for '$dist' distribution"
