@@ -1,5 +1,5 @@
 dist: xenial
-language: python
+language: minimal
 sudo: required
 services:
   - docker

@@ -1,7 +1,7 @@
 version: 2
 
 commands:
-  .ubuntu:template:
+  test:
     parameters:
       config:
         type: string
@@ -13,13 +13,13 @@ jobs:
     docker:
       - image: ubuntu:bionic
     steps:
-      - .ubuntu:template:
+      - test:
           config: base
   ubuntu:desktop:
     docker:
       - image: ubuntu:bionic
     steps:
-      - .ubuntu:template:
+      - test:
           config: extra
 workflows:
   version: 2
