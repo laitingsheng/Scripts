@@ -1,25 +1,23 @@
 version: 2.1
-
 commands:
-  .ubuntu:template:
+  ubuntu-template-test:
     parameters:
       config:
         type: string
     steps:
       - run: bash ubuntu/<< parameters.config >>.sh -d bionic -l au
-
 jobs:
-  ubuntu:base:
+  ubuntu-base:
     docker:
       - image: ubuntu:bionic
     steps:
-      - .ubuntu:template:
+      - ubuntu-template-test:
           config: base
-  ubuntu:desktop:
+  ubuntu-desktop:
     docker:
       - image: ubuntu:bionic
     steps:
-      - .ubuntu:template:
+      - ubuntu-template-test:
           config: extra
 workflows:
   version: 2
