@@ -5,6 +5,7 @@ commands:
       config:
         type: string
     steps:
+      - checkout
       - run: bash ubuntu/<< parameters.config >>.sh -d bionic -l au
 jobs:
   ubuntu-base:
