@@ -1,33 +1,33 @@
 version: 2.1
 commands:
-  ubuntu:test:
+  ubuntu-test:
     parameters:
       config:
         type: string
     steps:
       - run: bash ubuntu/<< parameters.config >>.sh -d bionic -l au
 jobs:
-  ubuntu:base:
+  ubuntu-base:
     docker:
       - image: ubuntu:bionic
     steps:
-      - ubuntu:test:
+      - ubuntu-test:
           config: base
-  ubuntu:desktop:
+  ubuntu-desktop:
     docker:
       - image: ubuntu:bionic
     steps:
-      - ubuntu:test:
+      - ubuntu-test:
           config: extra
 workflows:
   version: 2
   multiple-tests:
     jobs:
-      - ubuntu:base:
+      - ubuntu-base:
           filters:
             branches:
               only: master
-      - ubuntu:desktop:
+      - ubuntu-desktop:
           filters:
             branches:
               only: master
