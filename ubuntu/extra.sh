@@ -22,4 +22,5 @@ haskell-stack
 mono-complete
 EOL
 
-info_echo "Desktop script finalised"
+CURRENT_STEP='Fianlised'
+ON_EXIT_MSG='Desktop script execution completed'
