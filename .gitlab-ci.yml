@@ -2,7 +2,6 @@
   image: ubuntu:bionic
   script:
     - bash ubuntu/$config.sh -d bionic -l us -p 'conda=/usr/local'
-    - bash ubuntu/test/$config.sh
   only:
     - master
 
