@@ -6,10 +6,8 @@ services:
 env:
   - config=base
   - config=extra
-
 script:
   - sudo docker run -v $PWD:/build ubuntu:bionic /bin/bash -c "cd /build; bash ci/ubuntu.sh $config"
-
 branches:
   only:
     - master
