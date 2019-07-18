@@ -10,7 +10,7 @@ jobs:
         base:
           config: base
         desktop:
-          config: desktop
+          config: extra
       maxParallel: 2
     steps:
       - bash: sudo docker run -v $PWD:/build ubuntu:bionic /bin/bash -c "cd /build; bash ci/ubuntu.sh $(config)"

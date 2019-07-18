@@ -1,25 +1,26 @@
 version: 2
+
+commands:
+  .ubuntu:template:
+    parameters:
+      config:
+        type: string
+    steps:
+      - run: bash ubuntu/<< parameters.config >>.sh -d bionic -l au
+
 jobs:
   ubuntu:base:
     docker:
       - image: ubuntu:bionic
     steps:
-      - checkout
-      - run:
-          name: Initialise
-          command: |
-            bash ubuntu.base.sh -d bionic -l us -u $(whoami)
-            bash ubuntu.base.test.sh
+      - .ubuntu:template:
+          config: base
   ubuntu:desktop:
     docker:
       - image: ubuntu:bionic
     steps:
-      - checkout
-      - run:
-          name: Initialise
-          command: |
-            bash ubuntu.desktop.sh -d bionic -l us -u $(whoami)
-            bash ubuntu.desktop.test.sh
+      - .ubuntu:template:
+          config: extra
 workflows:
   version: 2
   multiple-tests:

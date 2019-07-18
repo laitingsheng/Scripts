@@ -31,10 +31,6 @@ Standard Options:
     -l locale (country code)
         Used to generate and update locale. It will be used to generate a URL for official Ubuntu repository if -r is not specified
         Default: au
-    -p prefixes for installations (optional)
-        Installation prefixes for extra applications (not used in base script)
-        Format: app1=/path1/to/be/installed:app2=/path2/to/be/installed:...
-        Default: empty assosiative array
     -r repository URL
         Can be a custom repository URL
         Default: http://[locale].archive.ubuntu.com/ubuntu or fall back to http://archive.ubuntu.com/ubuntu if the previous URL is invalid
@@ -49,7 +45,6 @@ EOL
 # default settings
 dist='bionic'
 loc='au'
-declare -A prefixes
 win_path='false'
 
 # parse options
@@ -71,16 +66,6 @@ do
             loc=$OPTARG
             ON_EXIT_MSG="'$loc' should contain lowercase letters only"
             grep -Eq '^[a-z]+$' <<< $dist
-            ;;
-        p)
-            CURRENT_STEP='Validate $prefixes configuration'
-            ON_EXIT_MSG='Prefixes should conform key1=val1:key2=val2:...'
-            eval declare -A prefixes=($(echo $OPTARG | sed 's/:/\n/' | awk -F= '{print "["$1"]="$2}'))
-            for ind in "${!prefixes[@]}"
-            do
-                ON_EXIT_MSG="'$ind' has an invalid path '${prefixes[$ind]}'"
-                [ -d "${prefixes[$ind]}" ]
-            done
             ;;
         r )
             repo=$OPTARG
