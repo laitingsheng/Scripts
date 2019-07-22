@@ -144,6 +144,7 @@ software-properties-common
 gcc
 g++
 make
+tar
 wget
 curl
 perl
@@ -156,6 +157,9 @@ net-tools
 expect
 tree
 vim
+zip
+unzip
+p7zip
 python
 python-pip
 python3
