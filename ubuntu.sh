@@ -101,14 +101,6 @@ ON_EXIT_MSG='Fail to set timezone'
 # set timezone for tzdata
 ln -fs /usr/share/zoneinfo/Australia/Melbourne /etc/localtime
 
-CURRENT_STEP='Update locale'
-ON_EXIT_MSG='Fail to set locale'
-# Generate & change locale
-locale="en_${loc^^}.utf8"
-info_echo "Changing locale to $locale"
-locale-gen $locale || exit $?
-update-locale LANG=$locale LC_ALL=$locale LANGUAGE=$locale
-
 CURRENT_STEP='Modify /etc/apt/sources.list'
 ON_EXIT_MSG='Failed to modify /etc/apt/sources.list'
 # generate sources.list from template
@@ -176,6 +168,14 @@ clang-tools
 texlive
 texlive-full
 EOL
+
+CURRENT_STEP='Update locale'
+ON_EXIT_MSG='Fail to set locale'
+# Generate & change locale
+locale="en_${loc^^}.utf8"
+info_echo "Changing locale to $locale"
+locale-gen $locale || exit $?
+update-locale LANG=$locale LC_ALL=$locale LANGUAGE=$locale
 
 # WSL only
 if grep -iq microsoft <(uname -a)
