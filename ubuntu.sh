@@ -202,7 +202,7 @@ apt-get update
 CURRENT_STEP='Install Docker'
 ON_EXIT_MSG="Docker stable channel may not be available for '$dist'"
 info_echo 'Installing Docker'
-xargs apt-get install -fy containerd.io docker-ce docker-ce-cli
+apt-get install -fy containerd.io docker-ce docker-ce-cli
 
 CURRENT_STEP='Add Kubernetes & Google Cloud SDK to APT repository'
 ON_EXIT_MSG='Fail to add Google repositories'
@@ -216,7 +216,7 @@ apt-get update
 CURRENT_STEP='Install Google binaries'
 ON_EXIT_MSG='Failed to fetch some of the binaries'
 info_echo 'Installing Google binaries'
-xargs apt-get install -fy kubectl kubeadm kubelet google-cloud-sdk
+apt-get install -fy kubectl kubeadm kubelet google-cloud-sdk
 
 CURRENT_STEP='Add Microsoft repositories and install binaries'
 ON_EXIT_MSG='Fail to add Microsoft repositories/packages'
