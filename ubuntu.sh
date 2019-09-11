@@ -108,17 +108,19 @@ info_echo 'Updating /etc/apt/sources.list'
 install -o root -g root -m 644 templates/ubuntu.sources.list.template /etc/apt/sources.list
 sed -i "s|%REPO%|${repo:-http://${loc:-}${loc:+.}archive.ubuntu.com/ubuntu}|;s/%DIST%/$dist/" /etc/apt/sources.list
 
+CURRENT_STEP='Refresh index'
+ON_EXIT_MSG='Repository URL may not be valid or check the Internet connection'
+info_echo 'Refreshing the index'
+apt-get update
+
 CURRENT_STEP='Remove LXC and snapd'
 ON_EXIT_MSG='Fail to purge LXC packages'
 # Remove Ubuntu builtin container
 info_echo 'Removing unnecessary lxd and snap'
 apt-get purge lxd lxd-client snapd -fy
 
-CURRENT_STEP='Refresh index'
-ON_EXIT_MSG='Repository URL may not be valid or check the Internet connection'
-# manage packages
-info_echo 'Refreshing the index and installing/upgrading packages'
-apt-get update
+CURRENT_STEP='Upgrade packages'
+ON_EXIT_MSG='Check the Internet connection'
 apt-get dist-upgrade -fy
 apt-get upgrade -fy
 
