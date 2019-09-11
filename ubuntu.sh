@@ -108,6 +108,12 @@ info_echo 'Updating /etc/apt/sources.list'
 install -o root -g root -m 644 templates/ubuntu.sources.list.template /etc/apt/sources.list
 sed -i "s|%REPO%|${repo:-http://${loc:-}${loc:+.}archive.ubuntu.com/ubuntu}|;s/%DIST%/$dist/" /etc/apt/sources.list
 
+CURRENT_STEP='Remove LXC and snapd'
+ON_EXIT_MSG='Fail to purge LXC packages'
+# Remove Ubuntu builtin container
+info_echo 'Removing unnecessary lxd and snap'
+apt-get purge lxd lxd-client snapd -fy
+
 CURRENT_STEP='Refresh index'
 ON_EXIT_MSG='Repository URL may not be valid or check the Internet connection'
 # manage packages
@@ -115,12 +121,6 @@ info_echo 'Refreshing the index and installing/upgrading packages'
 apt-get update
 apt-get dist-upgrade -fy
 apt-get upgrade -fy
-
-CURRENT_STEP='Remove LXC and snapd'
-ON_EXIT_MSG='Fail to purge LXC packages'
-# Remove Ubuntu builtin container
-info_echo 'Removing unnecessary lxd and snap'
-apt-get purge lxd lxd-client snapd -fy
 
 CURRENT_STEP='Mark all dependencies as automatic installation'
 apt list --installed | cut -d '/' -f1 | xargs apt-mark auto
@@ -222,8 +222,8 @@ CURRENT_STEP='Add Microsoft repositories and install binaries'
 ON_EXIT_MSG='Fail to add Microsoft repositories/packages'
 # official Docker repo
 info_echo 'Adding Microsoft repositories/packages'
-curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.asc.gpg
-wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb -O /tmp/packages-microsoft-prod.deb
+curl -sL 'https://packages.microsoft.com/keys/microsoft.asc' | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.asc.gpg
+wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb" -O /tmp/packages-microsoft-prod.deb
 echo "deb https://packages.microsoft.com/repos/azure-cli/ $dist main" > /etc/apt/sources.list.d/azure.list
 dpkg -i /tmp/packages-microsoft-prod.deb
 apt-get update
