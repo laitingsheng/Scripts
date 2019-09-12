@@ -10,10 +10,11 @@ And also some specific packages:
 * conda - finalised
 
 It also includes the configurations for several known DevOps platforms, including:
-* GitLab CI/CD: [![GitLab CI](https://gitlab.com/laitingsheng/init/badges/master/pipeline.svg)](https://gitlab.com/laitingsheng/init)
+* GitLab CI/CD: [![GitLab CI](https://gitlab.com/laitingsheng/init/badges/master/pipeline.svg)](https://gitlab.com/laitingsheng/Init/pipelines)
+* GitHub Actions [![GitHub Actions](https://github.com/laitingsheng/Init/workflows/master/badge.svg)](https://github.com/laitingsheng/Init/actions)
+* Azure Pipelines: [![Azure Pipelines](https://dev.azure.com/laitingsheng/Init/_apis/build/status/Init?branchName=master)](https://dev.azure.com/laitingsheng/Init/_build)
 * Circle CI: [![Circle CI](https://circleci.com/gh/laitingsheng/Init/tree/master.svg?style=svg)](https://github.com/laitingsheng/Init)
-* Azure Pipelines: [![Azure Pipelines](https://dev.azure.com/laitingsheng/Init/_apis/build/status/Init?branchName=master)](https://dev.azure.com/laitingsheng/Init)
-* Circle CI: [![Circle CI](https://travis-ci.org/laitingsheng/Init.svg?branch=master)](https://github.com/laitingsheng/Init)
+* Travis CI: [![Circle CI](https://travis-ci.org/laitingsheng/Init.svg?branch=master)](https://travis-ci.org/laitingsheng/Init)
 
 This repository is pushed to three different platforms:
 * [GitLab](https://gitlab.com/laitingsheng/init)
