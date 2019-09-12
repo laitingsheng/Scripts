@@ -7,7 +7,7 @@ on:
 
 jobs:
   ubuntu:
-    runs-on: ubuntu-18.04
+    container: ubuntu:bionic
     steps:
       - uses: actions/checkout@master
-      - run: sudo bash ubuntu.sh
+      - run: bash ubuntu.sh

@@ -120,6 +120,8 @@ info_echo 'Removing unnecessary lxd and snap'
 apt-get purge lxd lxd-client snapd -fy
 
 CURRENT_STEP='Mark all dependencies as automatic installation'
+ON_EXIT_MSG='Unexpected error during marking automatic installation'
+info_echo 'Marking all pacages as automatic installation'
 apt list --installed | cut -d '/' -f1 | xargs apt-mark auto
 
 CURRENT_STEP='Install packages'
