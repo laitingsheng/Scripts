@@ -7,4 +7,5 @@ jobs:
   ubuntu:
     runs-on: ubuntu-18.04
     steps:
-      - run: bash ubuntu.sh
+      - uses: actions/checkout@master
+      - run: ubuntu.sh
