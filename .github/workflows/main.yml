@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@master
-      - run: ubuntu.sh
+      - run: bash ubuntu.sh
