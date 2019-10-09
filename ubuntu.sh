@@ -167,6 +167,9 @@ clang-tidy
 clang-tools
 texlive
 texlive-full
+gccgo
+golang
+gnugo
 EOL
 
 CURRENT_STEP='Update locale'
@@ -217,6 +220,7 @@ CURRENT_STEP='Install Google binaries'
 ON_EXIT_MSG='Failed to fetch some of the binaries'
 info_echo 'Installing Google binaries'
 apt-get install -fy kubectl kubeadm kubelet google-cloud-sdk
+kubectl completion bash > /etc/bash_completion.d/kubectl
 
 CURRENT_STEP='Add Microsoft repositories and install binaries'
 ON_EXIT_MSG='Fail to add Microsoft repositories/packages'
