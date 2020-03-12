@@ -21,7 +21,6 @@ dependencies:
   - dask
   - dask-core
   - datashape
-  - docker-compose
   - docutils
   - flask
   - flask-cors

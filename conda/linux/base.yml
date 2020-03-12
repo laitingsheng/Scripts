@@ -27,6 +27,7 @@ dependencies:
   - jupyterlab
   - jupyter_contrib_nbextensions
   - markdown
+  - matplotlib
   - more-itertools
   - multipledispatch
   - mypy

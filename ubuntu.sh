@@ -40,7 +40,7 @@ EOL
 }
 
 # default settings
-dist='bionic'
+dist=$(lsb_release -cs)
 loc='au'
 win_path='false'
 
@@ -96,10 +96,10 @@ fi
 # fix current umask
 umask 0022
 
-CURRENT_STEP='Update timezone to Australia/Melbourne'
+CURRENT_STEP='Update timezone to Australia/Adelaide'
 ON_EXIT_MSG='Fail to set timezone'
 # set timezone for tzdata
-ln -fs /usr/share/zoneinfo/Australia/Melbourne /etc/localtime
+ln -fs /usr/share/zoneinfo/Australia/Adelaide /etc/localtime
 
 CURRENT_STEP='Modify /etc/apt/sources.list'
 ON_EXIT_MSG='Failed to modify /etc/apt/sources.list'
@@ -127,21 +127,18 @@ apt list --installed | cut -d '/' -f1 | xargs apt-mark auto
 CURRENT_STEP='Install packages'
 ON_EXIT_MSG="Some of the packges is not available for '$dist' distribution"
 info_echo 'Installing packages'
-xargs apt-get install -fy <<- EOL
-bash
+xargs apt-get install -fy --install-suggests <<- EOL
 ubuntu-minimal
 ubuntu-standard
 ubuntu-server
 build-essential
-gcc
-g++
-make
 cmake
-zip
-git
-wget
-curl
-moreutils
+git-all
+git-ftp
+git-lfs
+rake
+wsl
+errno
 parallel
 expect
 tree
@@ -156,10 +153,9 @@ openjdk-8-jdk
 openjdk-11-jdk
 haskell-platform
 haskell-stack
-gdb
-lldb
 valgrind
-llvm
+lldb
+llvm-dev
 mono-complete
 clang
 clang-format
@@ -170,6 +166,7 @@ texlive-full
 gccgo
 golang
 gnugo
+ruby
 EOL
 
 CURRENT_STEP='Update locale'
@@ -191,7 +188,7 @@ then
     sed -i "s/%INTEROP_APPEND_WINDOWS_PATH%/$win_path/" /etc/wsl.conf
 
     # install the ubuntu-wsl if missing
-    apt-get install -fy ubuntu-wsl
+    apt-get install -fy --install-suggests ubuntu-wsl
 fi
 
 CURRENT_STEP='Add Docker to APT repository'
@@ -205,7 +202,7 @@ apt-get update
 CURRENT_STEP='Install Docker'
 ON_EXIT_MSG="Docker stable channel may not be available for '$dist'"
 info_echo 'Installing Docker'
-apt-get install -fy containerd.io docker-ce docker-ce-cli
+apt-get install -fy --install-suggests containerd.io docker-ce docker-ce-cli
 
 CURRENT_STEP='Add Kubernetes & Google Cloud SDK to APT repository'
 ON_EXIT_MSG='Fail to add Google repositories'
@@ -219,7 +216,7 @@ apt-get update
 CURRENT_STEP='Install Google binaries'
 ON_EXIT_MSG='Failed to fetch some of the binaries'
 info_echo 'Installing Google binaries'
-apt-get install -fy kubectl kubeadm kubelet google-cloud-sdk
+apt-get install -fy --install-suggests kubectl kubeadm kubelet google-cloud-sdk
 kubectl completion bash > /etc/bash_completion.d/kubectl
 
 CURRENT_STEP='Add Microsoft repositories and install binaries'
@@ -231,7 +228,7 @@ wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/package
 echo "deb https://packages.microsoft.com/repos/azure-cli/ $dist main" > /etc/apt/sources.list.d/azure.list
 dpkg -i /tmp/packages-microsoft-prod.deb
 apt-get update
-apt-get install -y azure-cli dotnet-sdk-2.2
+apt-get install -fy --install-suggests azure-cli dotnet-sdk-2.2
 rm /tmp/packages-microsoft-prod.deb
 
 CURRENT_STEP='Remove unnecessary packages'
