@@ -14,9 +14,15 @@ ubuntu-gnome-desktop
 build-essential
 cmake-extras
 meson
+gcc-multilib
+g++-multilib
 gcc-opt
+uuid-dev
+uuid-runtime
 gdc
 gcovr
+flex
+bison
 git-all
 git-ftp
 git-lfs
@@ -32,6 +38,9 @@ python3-pip
 gradle
 maven
 libboost-all-dev
+libyaml-cpp-dev
+libfmt-dev
+libantlr4-runtime-dev
 openjdk-8-jdk
 openjdk-11-jdk
 haskell-platform
@@ -55,6 +64,7 @@ nodejs
 npm
 julia
 locales-all
+language-pack-gnome-en
 language-pack-gnome-zh-hans
 language-pack-gnome-zh-hant
 intel-mkl-full
