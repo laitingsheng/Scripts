@@ -1,16 +1,19 @@
 #!/usr/bin/env bash
 
-source general.bash
+DIR=`dirname ${BASH_SOURCE[0]}`
 
-install -o root -g root -m 644 ubuntu.sources.list.template /etc/apt/sources.list
-sed -i "s|%REPO%|http://au.archive.ubuntu.com/ubuntu|g;s/%DIST%/${dist}/g" /etc/apt/sources.list
-apt-get update
-apt list --installed | cut -d '/' -f1 | xargs apt-mark auto
+source ${DIR}/general.bash
+
+source ${DIR}/lists/wsl.bash
+source ${DIR}/lists/refresh.bash
+
+# Remove LXC & Snap for WSL
+apt-get purge -fy lxd lxd-client snapd
+
 xargs apt-get install -fy <<- EOL
 ubuntu-minimal
 ubuntu-standard
 ubuntu-server
-ubuntu-gnome-desktop
 build-essential
 cmake-extras
 meson
@@ -28,13 +31,16 @@ git-ftp
 git-lfs
 subversion
 ruby-all-dev
+wsl
 errno
 parallel
 expect
 tree
-p7zip-full
+p7zip
 python3-all-dbg
+python3-keras
 python3-pip
+python3-venv
 gradle
 maven
 libboost-all-dev
@@ -64,9 +70,13 @@ nodejs
 npm
 julia
 locales-all
-language-pack-gnome-en
-language-pack-gnome-zh-hans
-language-pack-gnome-zh-hant
+language-pack-en
+language-pack-zh-hans
+language-pack-zh-hant
 intel-mkl-full
-nvidia-cuda-toolkit-gcc
 EOL
+
+install -o root -g root -m 644 wsl.conf /etc/wsl.conf
+apt-get install -fy ubuntu-wsl
+
+source dev.bash
