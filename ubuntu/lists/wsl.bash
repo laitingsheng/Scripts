@@ -9,6 +9,8 @@ install -o root -g root -m 644 ${DIR}/lists/docker.list /etc/apt/sources.list.d/
 sed -i "s/%DIST%/${dist}/g" /etc/apt/sources.list.d/docker.list
 install -o root -g root -m 644 ${DIR}/lists/google.list /etc/apt/sources.list.d/google.list
 
-curl -fsSL 'https://packages.microsoft.com/keys/microsoft.asc' | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.asc.gpg
-curl -fsSL 'https://download.docker.com/linux/ubuntu/gpg' | apt-key add -
-curl -fsSL 'https://packages.cloud.google.com/apt/doc/apt-key.gpg' | apt-key add -
+xargs apt-key adv -q --fetch-keys <<- EOL
+https://packages.microsoft.com/keys/microsoft.asc
+https://download.docker.com/linux/ubuntu/gpg
+https://packages.cloud.google.com/apt/doc/apt-key.gpg
+EOL
