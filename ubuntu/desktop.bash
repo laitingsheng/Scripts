@@ -13,7 +13,6 @@ ubuntu-minimal
 ubuntu-standard
 ubuntu-server
 kubuntu-desktop
-kubuntu-docs
 kubuntu-restricted-extras
 kde-standard
 kdeadmin
@@ -61,7 +60,7 @@ python3-venv
 python3-pygments
 python3-coverage-test-runner
 mypy
-cython-dbg
+cython3-dbg
 pycodestyle
 jupyter
 gradle
@@ -121,4 +120,20 @@ kubeadm
 google-chrome-stable
 steam
 code
+EOL
+
+# Docs
+xargs apt-get install -fy <<- EOL
+gccgo-doc
+gcc-doc
+haskell-platform-doc
+julia-doc
+kubuntu-docs
+libboost-doc
+libfmt-doc
+libtbb-doc
+mypy-doc
+openjdk-8-doc
+openjdk-11-doc
+python3-doc
 EOL
