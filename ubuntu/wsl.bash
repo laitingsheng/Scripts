@@ -4,7 +4,7 @@ DIR=`dirname ${BASH_SOURCE[0]}`
 
 source ${DIR}/general.bash
 
-source ${DIR}/lists/wsl.bash
+source ${DIR}/lists/base.bash
 source ${DIR}/lists/refresh.bash
 
 # Remove LXC & Snap for WSL
