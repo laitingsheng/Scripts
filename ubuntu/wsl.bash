@@ -52,13 +52,8 @@ ruby-all-dev
 python3-all-dbg
 python3-pip
 python3-venv
-python3-pygments
 python3-coverage-test-runner
-python3-git
 python3-autopep8
-mypy
-cython3-dbg
-pycodestyle
 jupyter
 gradle
 maven
@@ -81,7 +76,7 @@ texlive-full
 gccgo
 golang
 gnugo
-npm
+nodejs
 julia
 nvidia-cuda-toolkit-gcc
 terraform
@@ -93,22 +88,6 @@ libboost-all-dev
 libyaml-cpp-dev
 libfmt-dev
 intel-mkl-full
-python3-unidiff
-python3-ddt
-python3-keras
-python3-sklearn-pandas
-python3-skimage
-python3-seaborn
-python3-matplotlib-dbg
-python3-py
-python3-pytools
-python3-selenium
-python3-pythonmagick
-python3-mpi4py-dbg
-python3-openstacksdk
-python3-openstackclient
-node-react
-node-typescript-types
 EOL
 
 # Apps
@@ -129,10 +108,13 @@ julia-doc
 libboost-doc
 libfmt-doc
 libtbb-doc
-mypy-doc
 openjdk-8-doc
 openjdk-11-doc
 python3-doc
 EOL
 
 install -o root -g root -m 644 wsl.conf /etc/wsl.conf
+
+update-locale LANG=en_AU.utf8 LANGUAGE=en_AU.utf8 LC_ALL=en_AU.utf8
+
+npm install -g cordova react typescript
