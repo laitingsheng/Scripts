@@ -117,4 +117,4 @@ install -o root -g root -m 644 wsl.conf /etc/wsl.conf
 
 update-locale LANG=en_AU.utf8 LANGUAGE=en_AU.utf8 LC_ALL=en_AU.utf8
 
-npm install -g cordova react typescript
+npm install -g cordova react typescript serve
