@@ -47,6 +47,7 @@ git-all
 git-ftp
 git-lfs
 gh
+grip
 subversion
 ruby-all-dev
 python3-all-dbg
