@@ -19,7 +19,7 @@ fi
 DIR=`dirname ${BASH_SOURCE[0]}`
 DIST=$(lsb_release -cs)
 RELEASE=$(lsb_release -rs)
-REPO="au.archive.ubuntu.com"
+REPO="http://au.archive.ubuntu.com/ubuntu"
 DESKTOP=yes
 
 while getopts ":d:r:sv:w" ARG
