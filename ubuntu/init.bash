@@ -81,6 +81,8 @@ https://download.docker.com/linux/ubuntu/gpg
 https://packages.cloud.google.com/apt/doc/apt-key.gpg
 https://apt.releases.hashicorp.com/gpg
 https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
+http://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub
 EOL
 
 # update preferences
@@ -191,8 +193,10 @@ golang
 gnugo
 nodejs
 julia
-nvidia-cuda-toolkit-gcc
 terraform
+intel-hpckit
+cuda-toolkit-11-2
+ocl-icd-opencl-dev
 EOL
 
 # libraries
@@ -200,7 +204,6 @@ xargs apt-get install -fy <<- EOL
 libboost-all-dev
 libyaml-cpp-dev
 libfmt-dev
-intel-mkl-full
 EOL
 
 # common apps
