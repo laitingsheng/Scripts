@@ -195,7 +195,7 @@ nodejs
 julia
 terraform
 intel-hpckit
-cuda-toolkit-11-2
+cuda
 ocl-icd-opencl-dev
 EOL
 
